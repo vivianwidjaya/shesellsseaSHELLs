@@ -1,4 +1,5 @@
 import os
+import subprocess
 import sys
 from dataclasses import dataclass
 
@@ -16,7 +17,17 @@ class Builtins:
             case "exit":
                 self._exit()
             case _:
-                print(f"{self._input[0]}: command not found")
+                self._executable()
+
+    def _executable(self) -> None:
+        path = os.getenv("PATH", "")
+        path_lst = path.split(os.pathsep)
+        for dir in path_lst:
+            search_dir = dir + "/" + self._input[0]
+            if os.access(search_dir, os.X_OK) == True:
+                subprocess.run(self._input, check=False)
+                return
+        print(f"{self._input[0]}: command not found")
 
     def _exit(self) -> None:
         sys.exit(0)
