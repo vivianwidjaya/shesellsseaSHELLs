@@ -2,6 +2,7 @@ import os
 import subprocess
 import sys
 from dataclasses import dataclass
+from pathlib import Path
 
 
 @dataclass
@@ -16,18 +17,28 @@ class Builtins:
                 self._type()
             case "exit":
                 self._exit()
+            case "pwd":
+                self._pwd()
             case _:
                 self._executable()
 
-    def _executable(self) -> None:
+    def _getpath(self) -> list[str]:
         path = os.getenv("PATH", "")
         path_lst = path.split(os.pathsep)
+        return path_lst
+
+    def _executable(self) -> None:
+        path_lst = self._getpath()
         for dir in path_lst:
             search_dir = dir + "/" + self._input[0]
             if os.access(search_dir, os.X_OK) == True:
                 subprocess.run(self._input, check=False)
                 return
         print(f"{self._input[0]}: command not found")
+
+    def _pwd(self) -> None:
+        cur_dir = Path.cwd()
+        print(cur_dir)
 
     def _exit(self) -> None:
         sys.exit(0)
@@ -47,8 +58,7 @@ class Builtins:
                 print(f"{word} is a shell builtin")
                 return
             else:
-                path = os.getenv("PATH", "")
-                path_lst = path.split(os.pathsep)
+                path_lst = self._getpath()
                 for dir in path_lst:
                     search_dir = dir + "/" + word
                     if os.access(search_dir, os.X_OK) == True:

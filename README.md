@@ -11,5 +11,7 @@ Completed Features:
 [x] Implement a REPL
 [x] Implement Builtins (exit, echo, type)
 [x] Locate executable files
+[x] Run external programs
+[x] Implement pwd builtin
 
 
