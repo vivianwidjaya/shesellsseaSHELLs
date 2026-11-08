@@ -12,6 +12,7 @@ Completed Features:
 [x] Implement Builtins (exit, echo, type)
 [x] Locate executable files
 [x] Run external programs
-[x] Implement pwd builtin
+[x] Implement pwd Builtin 
+[x] Implement cd Builtin (absolute, relative, home)
 
 

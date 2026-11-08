@@ -25,11 +25,21 @@ class Builtins:
                 self._executable()
 
     def _cd(self) -> None:
-        path_inp = Path(self._input[1])
-        if path_inp.exists() == True:
-            os.chdir(path_inp)
+        if len(self._input) >= 2:
+            if self._input[1] == "~":
+                os.chdir(Path.home())
+            elif len(self._input) == 2:
+                path_inp = Path(self._input[1])
+                if path_inp.exists() == True:
+                    os.chdir(path_inp)
+                else:
+                    print(
+                        f"cd: {' '.join(self._clean_input())}: No such file or directory"
+                    )
+            else:
+                print("cd: too many arguments")
         else:
-            print(f"cd: {' '.join(self._clean_input())}: No such file or directory")
+            os.chdir(Path.home())
 
     def _getpath(self) -> list[str]:
         path = os.getenv("PATH", "")
