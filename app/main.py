@@ -19,8 +19,17 @@ class Builtins:
                 self._exit()
             case "pwd":
                 self._pwd()
+            case "cd":
+                self._cd()
             case _:
                 self._executable()
+
+    def _cd(self) -> None:
+        path_inp = Path(self._input[1])
+        if path_inp.exists() == True:
+            os.chdir(path_inp)
+        else:
+            print(f"cd: {' '.join(self._clean_input())}: No such file or directory")
 
     def _getpath(self) -> list[str]:
         path = os.getenv("PATH", "")
