@@ -1,4 +1,5 @@
 import os
+import shlex
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -90,7 +91,9 @@ def main():
     while True:
         sys.stdout.write("$ ")
 
-        input_str = input().split()
+        input_init = input()
+
+        input_str = shlex.split(input_init)
 
         output = Builtins(input_str)
         output.command()
