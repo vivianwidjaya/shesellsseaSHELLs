@@ -66,8 +66,15 @@ class Builtins:
     def _clean_input(self) -> list[str]:
         return self._input[1:]
 
+    def _check_redirect(self) -> bool:
+        return bool(">" in self._input[2:] and ">" != self._input[-1])
+
     def _echo(self) -> None:
-        print(" ".join(self._clean_input()))
+        result = " ".join(self._clean_input())
+        if not self._check_redirect():
+            print(result)
+        else:
+            Path(self._input[-1]).write_text((result.split(">")[0]) + "\n")
 
     def _type(self) -> None:
         cleaned_input = self._clean_input()
@@ -92,7 +99,6 @@ def main():
         sys.stdout.write("$ ")
 
         input_init = input()
-
         input_str = shlex.split(input_init)
 
         output = Builtins(input_str)
