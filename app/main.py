@@ -54,7 +54,7 @@ class Builtins:
             if os.access(search_dir, os.X_OK) == True:
                 subprocess.run(self._input, check=False)
                 return
-        print(f"{self._input[0]}: command not found")
+        print(f"{self._input[0]}: command not found", file=sys.stderr)
 
     def _pwd(self) -> None:
         cur_dir = Path.cwd()
@@ -90,7 +90,7 @@ class Builtins:
                     if os.access(search_dir, os.X_OK) == True:
                         print(f"{word} is {search_dir}")
                         return
-                print(f"{word}: not found")
+                print(f"{word}: not found", file=sys.stderr)
 
 
 def main():
