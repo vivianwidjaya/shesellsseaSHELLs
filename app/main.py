@@ -83,7 +83,6 @@ class Builtins:
         for word in cleaned_input:
             if word in ["echo", "exit", "type"]:
                 print(f"{word} is a shell builtin")
-                return
             else:
                 path_lst = self._getpath()
                 for dir in path_lst:
@@ -91,7 +90,7 @@ class Builtins:
                     if os.access(search_dir, os.X_OK) == True:
                         print(f"{word} is {search_dir}")
                         return
-            print(f"{word}: not found")
+                print(f"{word}: not found")
 
 
 def main():
