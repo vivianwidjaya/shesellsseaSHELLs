@@ -1,1 +1,0 @@
-bash: type: nkn: not found
